@@ -1,0 +1,40 @@
+﻿version: "3.9"
+services:
+  db:
+    image: postgres:16
+    container_name: kfirs-app-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: kfirs_app
+      POSTGRES_USER: kfirs_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kfirs_user -d kfirs_app"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build: kfire312/kfirs-app:latest
+    container_name: kfirs-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: kfirs_app
+      POSTGRES_USER: kfirs_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_USERNAME: kfire312
+      APP_PASSWORD_HASH: ${APP_PASSWORD_HASH}
+      FLASK_SECRET_KEY: ${FLASK_SECRET_KEY}
+
+volumes:
+  postgres_data:
+

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: kfirs-app
-          image: kfire312/kfirs-app:latest
+          image: kfire312/kfirs-app:v2
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

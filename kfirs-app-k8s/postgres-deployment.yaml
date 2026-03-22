@@ -1,8 +1,9 @@
-﻿apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   name: db
 spec:
+  serviceName: db
   replicas: 1
   selector:
     matchLabels:
@@ -53,7 +54,13 @@ spec:
             periodSeconds: 10
             timeoutSeconds: 3
             failureThreshold: 6
-      volumes:
-        - name: postgres-data
-          persistentVolumeClaim:
-            claimName: postgres-data
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+

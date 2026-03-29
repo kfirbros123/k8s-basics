@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-with-redis
+  namespace: default
+  labels:
+    app: web
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - redis
+          topologyKey: "kubernetes.io/hostname"
+  containers:
+    - name: web-app
+      image: nginx:latest
+      ports:
+        - containerPort: 8080

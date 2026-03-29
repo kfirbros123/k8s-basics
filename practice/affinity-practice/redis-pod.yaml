@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: redis
+  namespace: default
+  labels:
+    app: redis
+spec:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - mysql
+          topologyKey: "kubernetes.io/hostname"
+  containers:
+    - name: redis
+      image: nginx:latest
+      ports:
+        - containerPort: 8080

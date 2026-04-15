@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: blue-service
+  labels:
+    app: hare
+spec:
+  selector:
+    app: hare
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP

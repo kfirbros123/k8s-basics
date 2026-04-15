@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hare
+    group: animals
+  name: blue
+spec:
+  selector:
+    matchLabels:
+      group: animals
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        group: animals
+    spec:
+      containers:
+      - name: spring-music
+        image: supergiantkir/animals:hare
+        ports:
+          - containerPort: 80

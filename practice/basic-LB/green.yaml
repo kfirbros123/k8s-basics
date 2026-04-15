@@ -2,21 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: hare
+    app: bear
     group: animals
   name: green
 spec:
   selector:
     matchLabels:
       group: animals
+      app: bear
   replicas: 1
   template:
     metadata:
       labels:
         group: animals
+        app: bear
     spec:
       containers:
-      - name: spring-music
+      - name: bear
         image: supergiantkir/animals:bear
         ports:
         - containerPort: 80

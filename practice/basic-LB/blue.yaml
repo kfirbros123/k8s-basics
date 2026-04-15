@@ -14,9 +14,10 @@ spec:
     metadata:
       labels:
         group: animals
+        app: hare
     spec:
       containers:
-      - name: spring-music
+      - name: hare
         image: supergiantkir/animals:hare
         ports:
           - containerPort: 80
